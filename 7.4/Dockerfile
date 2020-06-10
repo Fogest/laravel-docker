@@ -92,7 +92,6 @@ RUN mkdir /data && \
     echo -e "include /etc/redis-local.conf\n" >> /etc/redis.conf
 
 VOLUME ["/data"]
-USER redis
 # Expose the ports for redis
 EXPOSE 6379
 
