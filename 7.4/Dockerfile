@@ -82,6 +82,20 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 # Install PHP_CodeSniffer
 RUN composer global require "squizlabs/php_codesniffer=*"
 
+# Install redis
+RUN mkdir /data && \
+    chown -R redis:redis /data && \
+    sed -i 's#logfile /var/log/redis/redis.log#logfile ""#i' /etc/redis.conf && \
+    sed -i 's#daemonize yes#daemonize no#i' /etc/redis.conf && \
+    sed -i 's#dir /var/lib/redis/#dir /data#i' /etc/redis.conf && \
+    echo -e "# placeholder for local options\n" > /etc/redis-local.conf && \
+    echo -e "include /etc/redis-local.conf\n" >> /etc/redis.conf
+
+VOLUME ["/data"]
+USER redis
+# Expose the ports for redis
+EXPOSE 6379
+
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
 
