@@ -30,8 +30,7 @@ RUN apk add --no-cache \
     libzip-dev \
     make \
     mysql-client \
-    nodejs \
-    nodejs-npm \
+    npm \
     oniguruma-dev \
     yarn \
     openssh-client \
